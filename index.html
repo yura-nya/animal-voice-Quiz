@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#fff0f5">
+  <title>変な鳴き声で鳴く犬猫クイズ</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+
+    <header class="header">
+      <div class="logo">🐶 🐱</div>
+      <h1>変な鳴き声の犬猫<br>全員参戦</h1>
+      <p>この子はいったい何と言う？</p>
+    </header>
+
+    <section id="homeScreen" class="screen active">
+      <div class="hero">
+        <div class="hero-emoji">🐕 💬 🐈</div>
+        <h2>動物たちの変な鳴き声を<br>当てよう！</h2>
+        <p>写真を見て、正解だと思う鳴き声を選んでね！</p>
+      </div>
+
+      <div class="mode-title">どのクイズに挑戦する？</div>
+      <div class="mode-buttons">
+        <button class="mode-btn" data-mode="all">🐾 ミックス編</button>
+        <button class="mode-btn" data-mode="dog">🐶 犬編</button>
+        <button class="mode-btn" data-mode="cat">🐱 猫編</button>
+      </div>
+
+      <button id="openEditor" class="sub-btn">
+        📷 写真と問題を追加する
+      </button>
+
+      <div class="saved-count">
+        登録されている問題：<span id="questionCount">0</span>問
+      </div>
+    </section>
+
+    <section id="quizScreen" class="screen">
+      <div class="quiz-top">
+        <button id="quitQuiz" class="back-btn">← 戻る</button>
+        <span id="progress">第1問 / 10問</span>
+        <span id="score">⭐ 0点</span>
+      </div>
+
+      <div class="progress-bg">
+        <div id="progressBar"></div>
+      </div>
+
+      <div class="photo-card">
+        <div id="animalTag" class="animal-tag">🐶 DOG</div>
+        <img id="animalPhoto" src="" alt="クイズの動物">
+      </div>
+
+      <h2 class="question-title">この子は何と言う？</h2>
+      <p class="question-subtitle">直感で選んでみよう！</p>
+
+      <div id="choices" class="choices"></div>
+
+      <div id="feedback" class="feedback"></div>
+
+      <button id="nextButton" class="next-btn hidden">
+        次の問題へ →
+      </button>
+    </section>
+
+    <section id="resultScreen" class="screen">
+      <div class="result-icon" id="resultIcon">🏆</div>
+      <h2>クイズ終了！</h2>
+      <p id="resultMessage"></p>
+
+      <div class="result-score">
+        <span>正解数</span>
+        <strong id="finalScore">0 / 10</strong>
+      </div>
+
+      <button id="retryButton" class="main-btn">もう一度遊ぶ！</button>
+      <button id="homeButton" class="sub-btn">タイトルに戻る</button>
+    </section>
+
+    <section id="editorScreen" class="screen">
+      <div class="editor-heading">
+        <button id="closeEditor" class="back-btn">← 戻る</button>
+        <h2>📷 問題を追加</h2>
+      </div>
+
+      <p class="editor-description">
+        お気に入りの犬や猫の写真を選んで、面白いセリフを登録しよう！
+      </p>
+
+      <form id="questionForm">
+        <label class="form-label">① 動物の写真</label>
+        <label class="upload-area" for="photoInput">
+          <span id="uploadText">📸 タップして写真を選ぶ</span>
+          <img id="previewPhoto" class="hidden" alt="写真プレビュー">
+        </label>
+        <input type="file" id="photoInput" accept="image/*" hidden required>
+
+        <label class="form-label">② 動物の種類</label>
+        <select id="animalType" required>
+          <option value="dog">🐶 犬</option>
+          <option value="cat">🐱 猫</option>
+        </select>
+
+        <label class="form-label">③ 正解のセリフ</label>
+        <input id="correctAnswer" type="text"
+          placeholder="例：おやつまだですか？" maxlength="60" required>
+
+        <p class="editor-description">
+          💡 ハズレの選択肢は、ほかの問題の正解から自動で選ばれるよ！
+        </p>
+
+        <button type="submit" class="main-btn">
+          ＋ この問題を保存する
+        </button>
+      </form>
+
+      <div class="editor-note">
+        💡 保存した問題はこのスマホのブラウザ内に保存されるよ。
+        写真は容量を抑えるために自動で縮小するよ。
+      </div>
+
+      <div class="registered-heading">
+        <h3>登録済みのオリジナル問題</h3>
+        <span id="customCount">0問</span>
+      </div>
+      <div id="customList" class="custom-list"></div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
