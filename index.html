@@ -63,6 +63,12 @@
 
       <div id="feedback" class="feedback"></div>
 
+<!-- 正解動画の再生エリア -->
+<div id="answerVideo" class="answer-video hidden">
+  <h3>🎬 正解の動画はこちら！</h3>
+  <div id="answerVideoPlayer"></div>
+</div>
+
       <button id="nextButton" class="next-btn hidden">
         次の問題へ →
       </button>
@@ -109,6 +115,13 @@
         <label class="form-label">③ 正解のセリフ</label>
         <input id="correctAnswer" type="text"
           placeholder="例：おやつまだですか？" maxlength="60" required>
+
+　　　　　<label class="form-label">④ 正解時に流す動画URL（任意）</label>
+<input
+  id="videoUrl"
+  type="url"
+  placeholder="YouTube・TikTok・XのURLを貼り付け"
+>
 
         <p class="editor-description">
           💡 ハズレの選択肢は、ほかの問題の正解から自動で選ばれるよ！
