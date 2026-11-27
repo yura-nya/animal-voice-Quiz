@@ -203,6 +203,92 @@ function showQuestion() {
 }
 
 // ==============================
+// 正解動画の埋め込み再生
+// ==============================
+
+function playAnswerVideo(url) {
+  const area = document.getElementById("answerVideo");
+  const player = document.getElementById("answerVideoPlayer");
+
+  player.replaceChildren();
+  area.classList.add("hidden");
+
+  if (!url) return;
+
+  let videoId;
+
+  // YouTube
+  const youtube = url.match(
+    /(?:youtube\.com\/(?:watch\?.*v=|embed\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
+  );
+
+  if (youtube) {
+    videoId = youtube[1];
+
+    const iframe = document.createElement("iframe");
+    iframe.src =
+      "https://www.youtube.com/embed/" + videoId + "?autoplay=1&playsinline=1";
+    iframe.allow = "autoplay; encrypted-media; picture-in-picture";
+    iframe.allowFullscreen = true;
+    iframe.style.width = "100%";
+    iframe.style.aspectRatio = "16 / 9";
+    iframe.style.border = "0";
+
+    player.appendChild(iframe);
+    area.classList.remove("hidden");
+    return;
+  }
+
+  // TikTok
+  const tiktok = url.match(/\/video\/(\d+)/);
+
+  if (tiktok && /tiktok\.com/i.test(url)) {
+    const iframe = document.createElement("iframe");
+    iframe.src =
+      "https://www.tiktok.com/player/v1/" + tiktok[1] + "?autoplay=1";
+    iframe.allow = "autoplay; fullscreen";
+    iframe.allowFullscreen = true;
+    iframe.style.width = "100%";
+    iframe.style.height = "600px";
+    iframe.style.border = "0";
+
+    player.appendChild(iframe);
+    area.classList.remove("hidden");
+    return;
+  }
+
+  // X（旧Twitter）
+  const twitter = url.match(
+    /(?:twitter\.com|x\.com)\/[^/]+\/status\/(\d+)/
+  );
+
+  if (twitter) {
+    const blockquote = document.createElement("blockquote");
+    blockquote.className = "twitter-tweet";
+
+    const link = document.createElement("a");
+    link.href = "https://x.com/i/status/" + twitter[1];
+
+    blockquote.appendChild(link);
+    player.appendChild(blockquote);
+
+    area.classList.remove("hidden");
+
+    const script = document.createElement("script");
+    script.src = "https://platform.twitter.com/widgets.js";
+    script.async = true;
+    script.charset = "utf-8";
+
+    document.body.appendChild(script);
+    return;
+  }
+
+  area.classList.remove("hidden");
+  player.textContent =
+    "このURLは対応していないか、動画を埋め込めない形式だよ。";
+}
+
+// ==============================
 // 回答判定
 // ==============================
 
