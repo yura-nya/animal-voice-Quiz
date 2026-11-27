@@ -387,3 +387,26 @@ button {
   margin-top: 8px;
   font-size: 12px;
 }
+/* 正解動画 */
+.answer-video {
+  margin: 20px 0;
+  padding: 15px;
+  background: #fff0f5;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.answer-video h3 {
+  color: #e75480;
+  margin-bottom: 12px;
+}
+
+#answerVideoPlayer {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+#answerVideoPlayer iframe {
+  max-width: 100%;
+}
