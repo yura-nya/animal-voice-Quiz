@@ -656,7 +656,7 @@ document.getElementById("closeEditor").addEventListener(
 // 35問の問題データを読み込む
 // ==============================
 
-fetch("./questions-backup-compressed.json")
+fetch("./questions-backup-compressed(1).json")
   .then(response => {
     if (!response.ok) {
       throw new Error("問題データを読み込めませんでした");
