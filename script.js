@@ -310,6 +310,10 @@ function answerQuestion(button, isCorrect) {
 
     button.classList.add("correct");
     feedback.textContent = "🎉 正解！！かわいいね！";
+// 正解した問題の動画を再生
+playAnswerVideo(
+  currentQuestions[currentIndex].videoUrl
+);
   } else {
     button.classList.add("wrong");
 
