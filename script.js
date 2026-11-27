@@ -4,7 +4,7 @@
 // ==============================
 
 // 最初から入っているサンプル問題
-const sampleQuestions = [];
+let sampleQuestions = [];
 
 const STORAGE_KEY = "wan_nyan_custom_questions_v1";
 
@@ -652,8 +652,26 @@ document.getElementById("closeEditor").addEventListener(
 // 起動時の処理
 // ==============================
 
-updateCounts();
-renderCustomList();
+// ==============================
+// 35問の問題データを読み込む
+// ==============================
+
+fetch("./questions-backup-compressed.json")
+  .then(response => {
+    if (!response.ok) {
+      throw new Error("問題データを読み込めませんでした");
+    }
+    return response.json();
+  })
+  .then(data => {
+    sampleQuestions = data;
+    updateCounts();
+    console.log("問題データ読み込み完了！", data.length + "問");
+  })
+  .catch(error => {
+    console.error(error);
+    alert("問題データを読み込めなかったよ！");
+  });
 
 // ==============================
 // 35問データ救出用
