@@ -134,15 +134,18 @@ function startQuiz(mode) {
 // 問題を表示
 // ==============================
 
+// 4つの選択肢を作る
+
+
 function showQuestion() {
   answered = false;
-document.getElementById("answerVideo")
-  .classList.add("hidden");
-
-document.getElementById("answerVideoPlayer")
-  .replaceChildren();ん
 
   const question = currentQuestions[currentIndex];
+
+  if (!question) {
+    console.error("問題データが見つかりません");
+    return;
+  }
 
   document.getElementById("progress").textContent =
     `第${currentIndex + 1}問 / 10問`;
@@ -153,8 +156,7 @@ document.getElementById("answerVideoPlayer")
   document.getElementById("progressBar").style.width =
     `${(currentIndex + 1) * 10}%`;
 
-  const photo = document.getElementById("animalPhoto");
-  photo.src = question.photo;
+  document.getElementById("animalPhoto").src = question.photo;
 
   document.getElementById("animalTag").textContent =
     question.type === "dog" ? "🐶 DOG" : "🐱 CAT";
@@ -162,7 +164,13 @@ document.getElementById("answerVideoPlayer")
   document.getElementById("feedback").textContent = "";
   document.getElementById("nextButton").classList.add("hidden");
 
-  // すべての問題から正解セリフを集める
+  // 前の動画を消す
+  const videoArea = document.getElementById("answerVideo");
+  const videoPlayer = document.getElementById("answerVideoPlayer");
+
+  if (videoArea) videoArea.classList.add("hidden");
+  if (videoPlayer) videoPlayer.replaceChildren();
+
   const allAnswers = [
     ...sampleQuestions,
     ...customQuestions
@@ -170,13 +178,10 @@ document.getElementById("answerVideoPlayer")
     .map(item => item.correct)
     .filter(text => text !== question.correct);
 
-  // 重複するセリフを除外
   const uniqueAnswers = [...new Set(allAnswers)];
 
-  // 正解以外からランダムに3つ選ぶ
   const wrongChoices = shuffle(uniqueAnswers).slice(0, 3);
 
-  // 4つの選択肢を作る
   const choices = [
     {
       text: question.correct,
@@ -191,11 +196,12 @@ document.getElementById("answerVideoPlayer")
   const shuffledChoices = shuffle(choices);
   const container = document.getElementById("choices");
 
-  container.innerHTML = "";
+  container.replaceChildren();
 
   shuffledChoices.forEach(choice => {
     const button = document.createElement("button");
 
+    button.type = "button";
     button.className = "choice-btn";
     button.textContent = choice.text;
 
