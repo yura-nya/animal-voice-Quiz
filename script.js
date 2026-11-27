@@ -308,29 +308,33 @@ function answerQuestion(button, isCorrect) {
 
   answered = true;
 
+  const question = currentQuestions[currentIndex];
   const buttons = document.querySelectorAll(".choice-btn");
+  const feedback = document.getElementById("feedback");
 
   buttons.forEach(item => {
     item.disabled = true;
   });
 
-  const feedback = document.getElementById("feedback");
-
   if (isCorrect) {
     correctCount++;
 
     button.classList.add("correct");
+
     feedback.textContent = "🎉 正解！！かわいいね！";
-// 正解した問題の動画を再生
-playAnswerVideo(
-  currentQuestions[currentIndex].videoUrl
-);ん
+
+    // 正解動画を再生
+    if (
+      question.videoUrl &&
+      typeof playAnswerVideo === "function"
+    ) {
+      playAnswerVideo(question.videoUrl);
+    }
+
   } else {
     button.classList.add("wrong");
 
     buttons.forEach(item => {
-      const question = currentQuestions[currentIndex];
-
       if (item.textContent === question.correct) {
         item.classList.add("correct");
       }
@@ -338,7 +342,7 @@ playAnswerVideo(
 
     feedback.textContent =
       "🤣 残念！正解は「" +
-      currentQuestions[currentIndex].correct +
+      question.correct +
       "」でした！";
   }
 
