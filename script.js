@@ -318,7 +318,7 @@ function answerQuestion(button, isCorrect) {
 // 正解した問題の動画を再生
 playAnswerVideo(
   currentQuestions[currentIndex].videoUrl
-);
+);ん
   } else {
     button.classList.add("wrong");
 
@@ -489,10 +489,11 @@ document.getElementById("questionForm").addEventListener(
     }
 
     const newQuestion = {
-      type: document.getElementById("animalType").value,
-      photo: selectedPhoto,
-      correct
-    };
+  type: document.getElementById("animalType").value,
+  photo: selectedPhoto,
+  correct,
+  videoUrl: document.getElementById("videoUrl").value.trim()
+};
 
     customQuestions.push(newQuestion);
 
@@ -662,6 +663,32 @@ function renderCustomList() {
       }
     });
 
+// 動画URL編集ボタン
+const videoButton = document.createElement("button");
+
+videoButton.className = "delete-btn";
+videoButton.textContent = "🎬 動画URLを設定・変更";
+
+videoButton.addEventListener("click", () => {
+  const newUrl = prompt(
+    "YouTube・TikTok・Xの動画URLを入力してね！",
+    question.videoUrl || ""
+  );
+
+  if (newUrl === null) return;
+
+  const oldUrl = question.videoUrl;
+
+  question.videoUrl = newUrl.trim();
+
+  if (saveCustomQuestions()) {
+    alert("🎉 動画URLを保存したよ！");
+    renderCustomList();
+  } else {
+    question.videoUrl = oldUrl;
+  }
+});
+
     // ==============================
     // 削除ボタン
     // ==============================
@@ -690,6 +717,7 @@ function renderCustomList() {
     item.appendChild(changeButton);
     item.appendChild(fileInput);
     item.appendChild(editButton);
+    item.appendChild(videoButton);
     item.appendChild(deleteButton);
 
     list.appendChild(item);
