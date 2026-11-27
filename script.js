@@ -136,6 +136,11 @@ function startQuiz(mode) {
 
 function showQuestion() {
   answered = false;
+document.getElementById("answerVideo")
+  .classList.add("hidden");
+
+document.getElementById("answerVideoPlayer")
+  .replaceChildren();ん
 
   const question = currentQuestions[currentIndex];
 
